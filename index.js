@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -16,6 +16,19 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         await client.connect();
+        const toolCollection = client.db('dbTools').collection('tool');
+
+        app.get('/tools', async (req, res) => {
+            const query = {};
+            const result = await toolCollection.find(query).toArray();
+            res.send(result)
+        });
+        app.get('/tools/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await toolCollection.findOne(query);
+            res.send(result);
+        });
 
         app.post('/login', async (req, res) => {
             const user = req.body;
