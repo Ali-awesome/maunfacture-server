@@ -77,12 +77,12 @@ async function run() {
             res.send(result)
         });
 
-        // app.get('/orderByEmail', async (req, res) => {
-        //     const email = req.query.email;
-        //     const query = { email: email };
-        //     const result = await orderCollection.find(query).toArray();
-        //     res.send(result);
-        // });
+        app.get('/orderByEmail', async (req, res) => {
+            const email = req.query.email;
+            const query = { email: email };
+            const result = await orderCollection.find(query).toArray();
+            res.send(result);
+        });
 
 
         // Storing reviews to server
