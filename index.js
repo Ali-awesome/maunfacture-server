@@ -62,16 +62,38 @@ async function run() {
             res.send({ result, token });
         });
 
+
+        // Storing oreders in server
         app.post('/order', async (req, res) => {
             const order = req.body;
             const result = await orderCollection.insertOne(order);
             res.send(result);
-        })
+        });
+
+        // Getting oreders all and by email
+        app.get('/orders', async (req, res) => {
+            const query = {};
+            const result = await orderCollection.find(query).toArray();
+            res.send(result)
+        });
+
+        // app.get('/orderByEmail', async (req, res) => {
+        //     const email = req.query.email;
+        //     const query = { email: email };
+        //     const result = await orderCollection.find(query).toArray();
+        //     res.send(result);
+        // });
+
+
+        // Storing reviews to server
         app.post('/review', async (req, res) => {
             const review = req.body;
             const result = await reviewCollection.insertOne(review);
             res.send(result);
         })
+
+
+        // Getting reviews all and by name
         app.get('/reviews', async (req, res) => {
             const query = {};
             const result = await reviewCollection.find(query).sort({ _id: -1 }).toArray();
