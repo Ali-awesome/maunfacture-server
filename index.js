@@ -33,6 +33,8 @@ async function run() {
         await client.connect();
         const toolCollection = client.db('dbTools').collection('tool');
         const userCollection = client.db('dbTools').collection('user');
+        const reviewCollection = client.db('dbTools').collection('review');
+        const orderCollection = client.db('dbTools').collection('oreder');
 
         app.get('/tools', async (req, res) => {
             const query = {};
